@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Math Practice Drills</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      color: #7f8c8d;
+      margin-bottom: 30px;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    button {
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      outline: none;
+    }
+    #startBtn {
+      background: #27ae60;
+      color: white;
+    }
+    #startBtn:hover {
+      background: #219653;
+    }
+    #resetBtn {
+      background: #e74c3c;
+      color: white;
+    }
+    #resetBtn:hover {
+      background: #c0392b;
+    }
+    .difficulty {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .diff-btn {
+      background: #ecf0f1;
+      color: #2c3e50;
+      padding: 10px 20px;
+    }
+    .diff-btn.active {
+      background: #3498db;
+      color: white;
+    }
+    #problem {
+      font-size: 2.8rem;
+      margin: 20px 0;
+      font-weight: 700;
+      color: #2c3e50;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #input {
+      font-size: 2rem;
+      padding: 16px;
+      text-align: center;
+      border: 2px solid #bdc3c7;
+      border-radius: 8px;
+      width: 200px;
+      margin: 0 auto 24px;
+      outline: none;
+    }
+    #input:focus {
+      border-color: #3498db;
+    }
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 1.4rem;
+      margin-top: 16px;
+    }
+    .stat-item {
+      background: #f8f9fa;
+      padding: 12px 24px;
+      border-radius: 8px;
+      min-width: 140px;
+    }
+    .stat-label {
+      font-size: 1rem;
+      color: #7f8c8d;
+      display: block;
+    }
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    #timer {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #e67e22;
+      margin: 16px 0;
+    }
+    #results {
+      margin-top: 20px;
+      text-align: left;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .result-line {
+      padding: 6px 0;
+      font-size: 1.1rem;
+      color: #2c3e50;
+    }
+    .correct { color: #27ae60; }
+    .incorrect { color: #e74c3c; }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      #problem { font-size: 2.2rem; }
+      #input { width: 100%; max-width: 300px; }
+      .stats { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Math Practice Drills</h1>
+    <p class="subtitle">Тренируй скорость и точность в арифметике</p>
+
+    <div class="section">
+      <div class="controls">
+        <div class="difficulty">
+          <button class="diff-btn active" data-level="easy">Лёгкий</button>
+          <button class="diff-btn" data-level="medium">Средний</button>
+          <button class="diff-btn" data-level="hard">Сложный</button>
+        </div>
+        <button id="startBtn">Начать квиз (60 с)</button>
+        <button id="resetBtn">Сбросить</button>
+      </div>
+
+      <div id="timer">60</div>
+      <div id="problem">—</div>
+      <input id="input" type="text" placeholder="?" autocomplete="off" disabled />
+
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-label">Правильно</span>
+          <span class="stat-value" id="correct">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Неправильно</span>
+          <span class="stat-value" id="incorrect">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Всего</span>
+          <span class="stat-value" id="total">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>История решений</h2>
+      <div id="results">
+        <div class="result-line">Начните квиз, чтобы увидеть историю</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DOM elements
+    const problemEl = document.getElementById('problem');
+    const inputEl = document.getElementById('input');
+    const timerEl = document.getElementById('timer');
+    const correctEl = document.getElementById('correct');
+    const incorrectEl = document.getElementById('incorrect');
+    const totalEl = document.getElementById('total');
+    const resultsEl = document.getElementById('results');
+    const startBtn = document.getElementById('startBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const diffButtons = document.querySelectorAll('.diff-btn');
+
+    // State
+    let level = 'easy';
+    let timer = null;
+    let timeLeft = 60;
+    let correct = 0;
+    let incorrect = 0;
+    let total = 0;
+    let currentProblem = null;
+    let resultsLog = [];
+
+    // Set difficulty
+    diffButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        diffButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        level = btn.dataset.level;
+      });
+    });
+
+    // Generate problem based on level
+    function generateProblem() {
+      let a, b, op, answer;
+
+      switch (level) {
+        case 'easy':
+          op = ['+', '-'][Math.floor(Math.random() * 2)];
+          a = Math.floor(Math.random() * 20) + 1;
+          b = Math.floor(Math.random() * 20) + 1;
+          if (op === '-' && a < b) [a, b] = [b, a];
+          answer = eval(`${a} ${op} ${b}`);
+          break;
+
+        case 'medium':
+          op = ['+', '-', '*'][Math.floor(Math.random() * 3)];
+          if (op === '*') {
+            a = Math.floor(Math.random() * 12) + 1;
+            b = Math.floor(Math.random() * 12) + 1;
+          } else {
+            a = Math.floor(Math.random() * 50) + 1;
+            b = Math.floor(Math.random() * 50) + 1;
+            if (op === '-' && a < b) [a, b] = [b, a];
+          }
+          answer = eval(`${a} ${op} ${b}`);
+          break;
+
+        case 'hard':
+          op = ['+', '-', '*', '/'][Math.floor(Math.random() * 4)];
+          if (op === '/' || op === '*') {
+            a = Math.floor(Math.random() * 12) + 1;
+            b = Math.floor(Math.random() * 12) + 1;
+            if (op === '/') {
+              answer = a;
+              a = a * b;
+            }
+          } else {
+            a = Math.floor(Math.random() * 100) + 1;
+            b = Math.floor(Math.random() * 100) + 1;
+            if (op === '-' && a < b) [a, b] = [b, a];
+          }
+          answer = eval(`${a} ${op} ${b}`);
+          if (op === '/') answer = Math.round(answer); // integer division
+          break;
+      }
+
+      return { expression: `${a} ${op === '*' ? '×' : op === '/' ? '÷' : op} ${b} = ?`, a, b, op, answer };
+    }
+
+    // Display problem
+    function displayProblem() {
+      currentProblem = generateProblem();
+      problemEl.textContent = currentProblem.expression;
+      inputEl.value = '';
+      inputEl.focus();
+    }
+
+    // Check answer
+    function checkAnswer() {
+      const userAnswer = parseFloat(inputEl.value);
+      const isCorrect = Math.abs(userAnswer - currentProblem.answer) < 0.01;
+
+      if (isCorrect) {
+        correct++;
+        resultsLog.push({ expr: currentProblem.expression.replace('?', currentProblem.answer), status: 'correct' });
+      } else {
+        incorrect++;
+        resultsLog.push({ 
+          expr: `${currentProblem.expression.replace('?', userAnswer)} (верно: ${currentProblem.answer})`, 
+          status: 'incorrect' 
+        });
+      }
+      total = correct + incorrect;
+
+      updateStats();
+      updateResults();
+      displayProblem();
+    }
+
+    // Update stats display
+    function updateStats() {
+      correctEl.textContent = correct;
+      incorrectEl.textContent = incorrect;
+      totalEl.textContent = total;
+    }
+
+    // Update results log
+    function updateResults() {
+      resultsEl.innerHTML = '';
+      resultsLog.slice(-10).forEach(item => {
+        const line = document.createElement('div');
+        line.className = `result-line ${item.status}`;
+        line.textContent = item.expr;
+        resultsEl.prepend(line);
+      });
+    }
+
+    // Start quiz
+    startBtn.addEventListener('click', () => {
+      if (timer) return; // already running
+
+      // Reset stats for new session
+      correct = 0;
+      incorrect = 0;
+      total = 0;
+      resultsLog = [];
+      updateStats();
+      updateResults();
+
+      timeLeft = 60;
+      timerEl.textContent = timeLeft;
+      displayProblem();
+      inputEl.disabled = false;
+
+      timer = setInterval(() => {
+        timeLeft--;
+        timerEl.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+          endQuiz();
+        }
+      }, 1000);
+    });
+
+    // Reset everything
+    resetBtn.addEventListener('click', () => {
+      endQuiz(true);
+    });
+
+    function endQuiz(hardReset = false) {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+      inputEl.disabled = true;
+      problemEl.textContent = '—';
+      if (hardReset) {
+        correct = 0;
+        incorrect = 0;
+        total = 0;
+        resultsLog = [];
+        updateStats();
+        updateResults();
+        timeLeft = 60;
+        timerEl.textContent = timeLeft;
+      }
+    }
+
+    // Input handling
+    inputEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !inputEl.disabled) {
+        if (inputEl.value.trim() !== '') {
+          checkAnswer();
+        }
+      }
+    });
+
+    // Prevent non-numeric input (allow -, ., digits)
+    inputEl.addEventListener('keypress', (e) => {
+      const allowed = /[0-9\-\+\.]/;
+      if (!allowed.test(e.key) && e.key !== 'Enter') {
+        e.preventDefault();
+      }
+    });
+
+    // Initialise
+    displayProblem();
+    inputEl.disabled = true;
+  </script>
+</body>
+</html>
