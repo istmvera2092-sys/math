@@ -349,51 +349,24 @@
 <body>
   <button id="langToggle" class="lang-toggle">🇷🇺 Русский</button>
 
-  <script>
-    // ❄ Snowflakes
-    document.addEventListener('DOMContentLoaded', () => {
-      const count = 45;
-      for (let i = 0; i < count; i++) {
-        const snow = document.createElement('div');
-        snow.className = 'snowflake';
-        snow.textContent = '❄';
-
-        snow.style.setProperty('--x', `${Math.random() * 100}vw`);
-        snow.style.setProperty('--drift', `${(Math.random() * 18 - 9).toFixed(2)}vw`);
-
-        snow.style.opacity = `${0.35 + Math.random() * 0.6}`;
-        snow.style.fontSize = `${0.7 + Math.random() * 1.1}rem`;
-
-        snow.style.animationDuration = `${7 + Math.random() * 13}s`;
-        snow.style.animationDelay = `${Math.random() * 5}s`;
-
-        document.body.appendChild(snow);
-      }
-    });
-  </script>
-
+  <!-- ❄ Snowflakes (инициализация отложена до DOMContentLoaded) -->
   <div class="app">
     <div class="container">
-
       <!-- 🛡️ 4 герба домов -->
-     <!-- 🛡️ 4 герба домов (твои картинки) -->
-<div class="house-row" aria-label="Hogwarts Houses">
-  <div class="house-badge" title="Гриффиндор">
-    <img alt="Гриффиндор" src="images/gryffindor.png">
-  </div>
-
-  <div class="house-badge" title="Слизерин">
-    <img alt="Слизерин" src="images/slytherin.png">
-  </div>
-
-  <div class="house-badge" title="Хаффлпафф">
-    <img alt="Хаффлпафф" src="images/hufflepuff.png">
-  </div>
-
-  <div class="house-badge" title="Рэйвенкло">
-    <img alt="Рэйвенкло" src="images/ravenclaw.png">
-  </div>
-</div>
+      <div class="house-row" aria-label="Hogwarts Houses">
+        <div class="house-badge" title="Гриффиндор">
+          <img alt="Гриффиндор" src="images/gryffindor.png">
+        </div>
+        <div class="house-badge" title="Слизерин">
+          <img alt="Слизерин" src="images/slytherin.png">
+        </div>
+        <div class="house-badge" title="Хаффлпафф">
+          <img alt="Хаффлпафф" src="images/hufflepuff.png">
+        </div>
+        <div class="house-badge" title="Рэйвенкло">
+          <img alt="Рэйвенкло" src="images/ravenclaw.png">
+        </div>
+      </div>
 
       <div class="header">
         <h1 id="title">Math Practice Drills</h1>
@@ -462,286 +435,329 @@
   </div>
 
   <script>
-    const EASY_PROBLEMS_EN = [];
-    for (let a = 1; a <= 12; a++) {
-      for (let b = 1; b <= 12; b++) {
-        const sum = a + b;
-        if (sum >= 1 && sum <= 12) EASY_PROBLEMS_EN.push({ a, b, op: '+', answer: sum });
-        const diff = a - b;
-        if (diff >= 1 && diff <= 12) EASY_PROBLEMS_EN.push({ a, b, op: '-', answer: diff });
+    // ❄ Snowflakes — генерация после загрузки DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      const count = 45;
+      for (let i = 0; i < count; i++) {
+        const snow = document.createElement('div');
+        snow.className = 'snowflake';
+        snow.textContent = '❄';
+
+        snow.style.setProperty('--x', `${Math.random() * 100}vw`);
+        snow.style.setProperty('--drift', `${(Math.random() * 18 - 9).toFixed(2)}vw`);
+
+        snow.style.opacity = `${0.35 + Math.random() * 0.6}`;
+        snow.style.fontSize = `${0.7 + Math.random() * 1.1}rem`;
+
+        snow.style.animationDuration = `${7 + Math.random() * 13}s`;
+        snow.style.animationDelay = `${Math.random() * 5}s`;
+
+        document.body.appendChild(snow);
       }
-    }
 
-    const LOCALE = {
-      en: {
-        title: "Math Practice Drills",
-        subtitle: "Train your math intuition — Right or Wrong?",
-        labelLevel: "Difficulty",
-        labelTime: "Duration",
-        labelCorrect: "Correct",
-        labelIncorrect: "Incorrect",
-        labelTotal: "Total",
-        historyTitle: "Answer History",
-        btnEasy: "Easy",
-        btnMedium: "Medium",
-        btnHard: "Hard",
-        btn30: "30 s",
-        btn60: "60 s",
-        btn90: "90 s",
-        startBtn: "Start Quiz",
-        resetBtn: "Reset",
-        rightBtn: "✅ Right",
-        wrongBtn: "❌ Wrong",
-        resultStart: "Start the quiz to see history",
-        resultCorrect: " = {ans}",
-        resultIncorrect: " = {ans} (you chose Wrong)",
-        langToggle: "🇷🇺 Русский"
-      },
-      ru: {
-        title: "Тренировка математики",
-        subtitle: "Оценивайте — Верно или Неверно — и развивайте интуицию",
-        labelLevel: "Уровень",
-        labelTime: "Время",
-        labelCorrect: "Правильно",
-        labelIncorrect: "Неправильно",
-        labelTotal: "Всего",
-        historyTitle: "История решений",
-        btnEasy: "Лёгкий",
-        btnMedium: "Средний",
-        btnHard: "Сложный",
-        btn30: "30 с",
-        btn60: "60 с",
-        btn90: "90 с",
-        startBtn: "Начать квиз",
-        resetBtn: "Сбросить",
-        rightBtn: "✅ Верно",
-        wrongBtn: "❌ Неверно",
-        resultStart: "Начните квиз, чтобы увидеть историю",
-        resultCorrect: " = {ans}",
-        resultIncorrect: " = {ans} (вы выбрали «Неверно»)",
-        langToggle: "🇬🇧 English"
-      }
-    };
-
-    const langToggle = document.getElementById('langToggle');
-    const titleEl = document.getElementById('title');
-    const subtitleEl = document.getElementById('subtitle');
-    const labelLevelEl = document.getElementById('label-level');
-    const labelTimeEl = document.getElementById('label-time');
-    const labelCorrectEl = document.getElementById('label-correct');
-    const labelIncorrectEl = document.getElementById('label-incorrect');
-    const labelTotalEl = document.getElementById('label-total');
-    const historyTitleEl = document.getElementById('history-title');
-    const btnEasy = document.getElementById('btn-easy');
-    const btnMedium = document.getElementById('btn-medium');
-    const btnHard = document.getElementById('btn-hard');
-    const btn30 = document.getElementById('btn-30');
-    const btn60 = document.getElementById('btn-60');
-    const btn90 = document.getElementById('btn-90');
-    const startBtn = document.getElementById('startBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const rightBtn = document.getElementById('rightBtn');
-    const wrongBtn = document.getElementById('wrongBtn');
-    const problemEl = document.getElementById('problem');
-    const timerEl = document.getElementById('timer');
-    const correctEl = document.getElementById('correct');
-    const incorrectEl = document.getElementById('incorrect');
-    const totalEl = document.getElementById('total');
-    const resultsEl = document.getElementById('results');
-
-    let lang = 'en';
-    let level = 'easy';
-    let duration = 60;
-    let timer = null;
-    let timeLeft = 60;
-    let correct = 0;
-    let incorrect = 0;
-    let total = 0;
-    let currentProblem = null;
-    let resultsLog = [];
-    let isShowingAnswer = false;
-
-    function updateLanguage() {
-      const t = LOCALE[lang];
-      titleEl.textContent = t.title;
-      subtitleEl.textContent = t.subtitle;
-      labelLevelEl.textContent = t.labelLevel;
-      labelTimeEl.textContent = t.labelTime;
-      labelCorrectEl.textContent = t.labelCorrect;
-      labelIncorrectEl.textContent = t.labelIncorrect;
-      labelTotalEl.textContent = t.labelTotal;
-      historyTitleEl.textContent = t.historyTitle;
-      btnEasy.textContent = t.btnEasy;
-      btnMedium.textContent = t.btnMedium;
-      btnHard.textContent = t.btnHard;
-      btn30.textContent = t.btn30;
-      btn60.textContent = t.btn60;
-      btn90.textContent = t.btn90;
-      startBtn.textContent = t.startBtn;
-      resetBtn.textContent = t.resetBtn;
-      rightBtn.innerHTML = t.rightBtn;
-      wrongBtn.innerHTML = t.wrongBtn;
-      langToggle.textContent = t.langToggle;
-
-      if (resultsLog.length === 0) {
-        resultsEl.innerHTML = `<div class="result-line">${t.resultStart}</div>`;
-      }
-    }
-
-    langToggle.addEventListener('click', () => {
-      lang = lang === 'en' ? 'ru' : 'en';
-      updateLanguage();
-    });
-
-    [btnEasy, btnMedium, btnHard].forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (timer) return;
-        [btnEasy, btnMedium, btnHard].forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        level = btn.dataset.level;
-      });
-    });
-
-    [btn30, btn60, btn90].forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (timer) return;
-        [btn30, btn60, btn90].forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        duration = parseInt(btn.dataset.seconds);
-        timeLeft = duration;
-        timerEl.textContent = timeLeft;
-      });
-    });
-
-    function generateProblem() {
-      let a, b, op, answer;
-      if (level === 'easy') {
-        const p = EASY_PROBLEMS_EN[Math.floor(Math.random() * EASY_PROBLEMS_EN.length)];
-        ({ a, b, op, answer } = p);
-      } else if (level === 'medium') {
-        op = ['+', '-', '*'][Math.floor(Math.random() * 3)];
-        a = Math.floor(Math.random() * 20) + 1;
-        b = Math.floor(Math.random() * 20) + 1;
-        if (op === '-') { if (a < b) [a, b] = [b, a]; answer = a - b; }
-        else if (op === '+') answer = a + b;
-        else answer = a * b;
-      } else {
-        const ops = ['+', '-', '*', '/'];
-        op = ops[Math.floor(Math.random() * 4)];
-        if (op === '/') {
-          b = Math.floor(Math.random() * 9) + 1;
-          const k = Math.floor(Math.random() * 7) + 1;
-          a = b * k;
-          answer = k;
-        } else {
-          a = Math.floor(Math.random() * 50) + 1;
-          b = Math.floor(Math.random() * 50) + 1;
-          if (op === '-') { if (a < b) [a, b] = [b, a]; answer = a - b; }
-          else if (op === '+') answer = a + b;
-          else answer = a * b;
+      // === 🧙‍♂️ ВЕСЬ ОСНОВНОЙ КОД — только после полной загрузки DOM ===
+      const EASY_PROBLEMS_EN = [];
+      for (let a = 1; a <= 12; a++) {
+        for (let b = 1; b <= 12; b++) {
+          const sum = a + b;
+          if (sum >= 1 && sum <= 12) EASY_PROBLEMS_EN.push({ a, b, op: '+', answer: sum });
+          const diff = a - b;
+          if (diff >= 1 && diff <= 12) EASY_PROBLEMS_EN.push({ a, b, op: '-', answer: diff });
         }
       }
-      const displayOp = op === '*' ? '×' : op === '/' ? '÷' : op;
-      return { expr: `${a} ${displayOp} ${b}`, a, b, op, answer };
-    }
 
-    function showProblem() {
-      if (!timer) return;
-      isShowingAnswer = false;
-      currentProblem = generateProblem();
-      problemEl.textContent = currentProblem.expr + ' = ?';
-      rightBtn.disabled = false;
-      wrongBtn.disabled = false;
-    }
+      const LOCALE = {
+        en: {
+          title: "Math Practice Drills",
+          subtitle: "Train your math intuition — Right or Wrong?",
+          labelLevel: "Difficulty",
+          labelTime: "Duration",
+          labelCorrect: "Correct",
+          labelIncorrect: "Incorrect",
+          labelTotal: "Total",
+          historyTitle: "Answer History",
+          btnEasy: "Easy",
+          btnMedium: "Medium",
+          btnHard: "Hard",
+          btn30: "30 s",
+          btn60: "60 s",
+          btn90: "90 s",
+          startBtn: "Start Quiz",
+          resetBtn: "Reset",
+          rightBtn: "✅ Right",
+          wrongBtn: "❌ Wrong",
+          resultStart: "Start the quiz to see history",
+          resultCorrect: " = {ans}",
+          resultIncorrect: " = {ans} (you chose Wrong)",
+          langToggle: "🇷🇺 Русский"
+        },
+        ru: {
+          title: "Тренировка математики",
+          subtitle: "Оценивайте — Верно или Неверно — и развивайте интуицию",
+          labelLevel: "Уровень",
+          labelTime: "Время",
+          labelCorrect: "Правильно",
+          labelIncorrect: "Неправильно",
+          labelTotal: "Всего",
+          historyTitle: "История решений",
+          btnEasy: "Лёгкий",
+          btnMedium: "Средний",
+          btnHard: "Сложный",
+          btn30: "30 с",
+          btn60: "60 с",
+          btn90: "90 с",
+          startBtn: "Начать квиз",
+          resetBtn: "Сбросить",
+          rightBtn: "✅ Верно",
+          wrongBtn: "❌ Неверно",
+          resultStart: "Начните квиз, чтобы увидеть историю",
+          resultCorrect: " = {ans}",
+          resultIncorrect: " = {ans} (вы выбрали «Неверно»)",
+          langToggle: "🇬🇧 English"
+        }
+      };
 
-    function showAnswer(isUserRight) {
-      if (isShowingAnswer) return;
-      isShowingAnswer = true;
+      const langToggle = document.getElementById('langToggle');
+      const titleEl = document.getElementById('title');
+      const subtitleEl = document.getElementById('subtitle');
+      const labelLevelEl = document.getElementById('label-level');
+      const labelTimeEl = document.getElementById('label-time');
+      const labelCorrectEl = document.getElementById('label-correct');
+      const labelIncorrectEl = document.getElementById('label-incorrect');
+      const labelTotalEl = document.getElementById('label-total');
+      const historyTitleEl = document.getElementById('history-title');
+      const btnEasy = document.getElementById('btn-easy');
+      const btnMedium = document.getElementById('btn-medium');
+      const btnHard = document.getElementById('btn-hard');
+      const btn30 = document.getElementById('btn-30');
+      const btn60 = document.getElementById('btn-60');
+      const btn90 = document.getElementById('btn-90');
+      const startBtn = document.getElementById('startBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const rightBtn = document.getElementById('rightBtn');
+      const wrongBtn = document.getElementById('wrongBtn');
+      const problemEl = document.getElementById('problem');
+      const timerEl = document.getElementById('timer');
+      const correctEl = document.getElementById('correct');
+      const incorrectEl = document.getElementById('incorrect');
+      const totalEl = document.getElementById('total');
+      const resultsEl = document.getElementById('results');
 
-      const t = LOCALE[lang];
-      if (isUserRight) {
-        correct++;
-        resultsLog.push({ expr: currentProblem.expr + t.resultCorrect.replace('{ans}', currentProblem.answer), status: 'correct' });
-      } else {
-        incorrect++;
-        resultsLog.push({ expr: currentProblem.expr + t.resultIncorrect.replace('{ans}', currentProblem.answer), status: 'incorrect' });
+      let lang = 'en';
+      let level = 'easy';
+      let duration = 60;
+      let timer = null;
+      let timeLeft = 60;
+      let correct = 0;
+      let incorrect = 0;
+      let total = 0;
+      let currentProblem = null;
+      let resultsLog = [];
+      let isShowingAnswer = false;
+
+      function updateLanguage() {
+        const t = LOCALE[lang];
+        titleEl.textContent = t.title;
+        subtitleEl.textContent = t.subtitle;
+        labelLevelEl.textContent = t.labelLevel;
+        labelTimeEl.textContent = t.labelTime;
+        labelCorrectEl.textContent = t.labelCorrect;
+        labelIncorrectEl.textContent = t.labelIncorrect;
+        labelTotalEl.textContent = t.labelTotal;
+        historyTitleEl.textContent = t.historyTitle;
+        btnEasy.textContent = t.btnEasy;
+        btnMedium.textContent = t.btnMedium;
+        btnHard.textContent = t.btnHard;
+        btn30.textContent = t.btn30;
+        btn60.textContent = t.btn60;
+        btn90.textContent = t.btn90;
+        startBtn.textContent = t.startBtn;
+        resetBtn.textContent = t.resetBtn;
+        rightBtn.innerHTML = t.rightBtn;
+        wrongBtn.innerHTML = t.wrongBtn;
+        langToggle.textContent = t.langToggle;
+
+        if (resultsLog.length === 0) {
+          resultsEl.innerHTML = `<div class="result-line">${t.resultStart}</div>`;
+        }
       }
-      total = correct + incorrect;
-      updateStats();
-      updateResults();
 
-      const symbol = isUserRight ? '✔' : '✗';
-      const color = isUserRight ? '#047857' : '#b91c1c';
-      problemEl.innerHTML = `<span style="color:${color}">${currentProblem.expr} = ${currentProblem.answer} ${symbol}</span>`;
-
-      rightBtn.disabled = true;
-      wrongBtn.disabled = true;
-
-      if (timeLeft > 0) setTimeout(() => { if (timer) showProblem(); }, 900);
-    }
-
-    function updateStats() {
-      correctEl.textContent = correct;
-      incorrectEl.textContent = incorrect;
-      totalEl.textContent = total;
-    }
-
-    function updateResults() {
-      resultsEl.innerHTML = '';
-      const recent = resultsLog.slice(-10);
-      if (recent.length === 0) {
-        resultsEl.innerHTML = `<div class="result-line">${LOCALE[lang].resultStart}</div>`;
-        return;
-      }
-      recent.forEach(item => {
-        const line = document.createElement('div');
-        line.className = `result-line ${item.status}`;
-        line.textContent = item.expr;
-        resultsEl.prepend(line);
+      langToggle.addEventListener('click', () => {
+        lang = lang === 'en' ? 'ru' : 'en';
+        updateLanguage();
       });
-    }
 
-    startBtn.addEventListener('click', () => {
-      if (timer) return;
+      [btnEasy, btnMedium, btnHard].forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (timer) return;
+          [btnEasy, btnMedium, btnHard].forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          level = btn.dataset.level;
+        });
+      });
 
-      correct = 0; incorrect = 0; total = 0; resultsLog = [];
-      updateStats(); updateResults();
+      [btn30, btn60, btn90].forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (timer) return;
+          [btn30, btn60, btn90].forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          duration = parseInt(btn.dataset.seconds);
+          timeLeft = duration;
+          timerEl.textContent = timeLeft;
+        });
+      });
 
-      timeLeft = duration;
-      timerEl.textContent = timeLeft;
+      function generateProblem() {
+        let a, b, op, answer;
+        if (level === 'easy') {
+          const p = EASY_PROBLEMS_EN[Math.floor(Math.random() * EASY_PROBLEMS_EN.length)];
+          ({ a, b, op, answer } = p);
+        } else if (level === 'medium') {
+          // Генерируем ПОКА не получим ответ в [13, 20]
+          let attempts = 0;
+          do {
+            op = ['+', '-', '*'][Math.floor(Math.random() * 3)];
+            a = Math.floor(Math.random() * 20) + 1; // 1–20
+            b = Math.floor(Math.random() * 20) + 1; // 1–20
 
-      timer = setInterval(() => {
-        timeLeft--;
-        timerEl.textContent = timeLeft;
-        if (timeLeft <= 0) endQuiz();
-      }, 1000);
+            if (op === '-') {
+              if (a < b) [a, b] = [b, a];
+              answer = a - b;
+            } else if (op === '+') {
+              answer = a + b;
+            } else { // '*'
+              answer = a * b;
+            }
+            attempts++;
+          } while ((answer < 13 || answer > 20) && attempts < 100);
 
-      startBtn.disabled = true;
-      showProblem();
-    });
+          // На случай неудачи — подстраховка
+          if (answer < 13 || answer > 20) {
+            a = 13; b = 5; op = '+'; answer = 18;
+          }
+        } else { // hard
+          const ops = ['+', '-', '*', '/'];
+          op = ops[Math.floor(Math.random() * 4)];
+          if (op === '/') {
+            b = Math.floor(Math.random() * 9) + 1;
+            const k = Math.floor(Math.random() * 7) + 1;
+            a = b * k;
+            answer = k;
+          } else {
+            a = Math.floor(Math.random() * 50) + 1;
+            b = Math.floor(Math.random() * 50) + 1;
+            if (op === '-') {
+              if (a < b) [a, b] = [b, a];
+              answer = a - b;
+            } else if (op === '+') {
+              answer = a + b;
+            } else {
+              answer = a * b;
+            }
+          }
+        }
+        const displayOp = op === '*' ? '×' : op === '/' ? '÷' : op;
+        return { expr: `${a} ${displayOp} ${b}`, a, b, op, answer };
+      }
 
-    resetBtn.addEventListener('click', () => endQuiz(true));
+      function showProblem() {
+        if (!timer) return;
+        isShowingAnswer = false;
+        currentProblem = generateProblem();
+        problemEl.textContent = currentProblem.expr + ' = ?';
+        rightBtn.disabled = false;
+        wrongBtn.disabled = false;
+      }
 
-    function endQuiz(hardReset = false) {
-      if (timer) clearInterval(timer);
-      timer = null;
-      rightBtn.disabled = true;
-      wrongBtn.disabled = true;
-      problemEl.textContent = '—';
-      startBtn.disabled = false;
-      if (hardReset) {
-        timeLeft = duration;
-        timerEl.textContent = timeLeft;
+      function showAnswer(isUserRight) {
+        if (isShowingAnswer) return;
+        isShowingAnswer = true;
+
+        const t = LOCALE[lang];
+        if (isUserRight) {
+          correct++;
+          resultsLog.push({ expr: currentProblem.expr + t.resultCorrect.replace('{ans}', currentProblem.answer), status: 'correct' });
+        } else {
+          incorrect++;
+          resultsLog.push({ expr: currentProblem.expr + t.resultIncorrect.replace('{ans}', currentProblem.answer), status: 'incorrect' });
+        }
+        total = correct + incorrect;
+        updateStats();
+        updateResults();
+
+        const symbol = isUserRight ? '✔' : '✗';
+        const color = isUserRight ? '#047857' : '#b91c1c';
+        problemEl.innerHTML = `<span style="color:${color}">${currentProblem.expr} = ${currentProblem.answer} ${symbol}</span>`;
+
+        rightBtn.disabled = true;
+        wrongBtn.disabled = true;
+
+        if (timeLeft > 0) setTimeout(() => { if (timer) showProblem(); }, 900);
+      }
+
+      function updateStats() {
+        correctEl.textContent = correct;
+        incorrectEl.textContent = incorrect;
+        totalEl.textContent = total;
+      }
+
+      function updateResults() {
+        resultsEl.innerHTML = '';
+        const recent = resultsLog.slice(-10);
+        if (recent.length === 0) {
+          resultsEl.innerHTML = `<div class="result-line">${LOCALE[lang].resultStart}</div>`;
+          return;
+        }
+        recent.forEach(item => {
+          const line = document.createElement('div');
+          line.className = `result-line ${item.status}`;
+          line.textContent = item.expr;
+          resultsEl.prepend(line);
+        });
+      }
+
+      startBtn.addEventListener('click', () => {
+        if (timer) return;
+
         correct = 0; incorrect = 0; total = 0; resultsLog = [];
         updateStats(); updateResults();
+
+        timeLeft = duration;
+        timerEl.textContent = timeLeft;
+
+        timer = setInterval(() => {
+          timeLeft--;
+          timerEl.textContent = timeLeft;
+          if (timeLeft <= 0) endQuiz();
+        }, 1000);
+
+        startBtn.disabled = true;
+        showProblem();
+      });
+
+      resetBtn.addEventListener('click', () => endQuiz(true));
+
+      function endQuiz(hardReset = false) {
+        if (timer) clearInterval(timer);
+        timer = null;
+        rightBtn.disabled = true;
+        wrongBtn.disabled = true;
+        problemEl.textContent = '—';
+        startBtn.disabled = false;
+        if (hardReset) {
+          timeLeft = duration;
+          timerEl.textContent = timeLeft;
+          correct = 0; incorrect = 0; total = 0; resultsLog = [];
+          updateStats(); updateResults();
+        }
       }
-    }
 
-    rightBtn.addEventListener('click', () => showAnswer(true));
-    wrongBtn.addEventListener('click', () => showAnswer(false));
+      rightBtn.addEventListener('click', () => showAnswer(true));
+      wrongBtn.addEventListener('click', () => showAnswer(false));
 
-    updateLanguage();
-    timerEl.textContent = duration;
+      updateLanguage();
+      timerEl.textContent = duration;
+    });
   </script>
 </body>
 </html>
