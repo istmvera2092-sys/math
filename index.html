@@ -635,27 +635,27 @@
           if (answer < 13 || answer > 20) {
             a = 13; b = 5; op = '+'; answer = 18;
           }
-        } else { // hard
-          const ops = ['+', '-', '*', '/'];
-          op = ops[Math.floor(Math.random() * 4)];
-          if (op === '/') {
-            b = Math.floor(Math.random() * 9) + 1;
-            const k = Math.floor(Math.random() * 7) + 1;
-            a = b * k;
-            answer = k;
-          } else {
-            a = Math.floor(Math.random() * 50) + 1;
-            b = Math.floor(Math.random() * 50) + 1;
-            if (op === '-') {
-              if (a < b) [a, b] = [b, a];
-              answer = a - b;
-            } else if (op === '+') {
-              answer = a + b;
-            } else {
-              answer = a * b;
-            }
-          }
-        }
+        } else {
+  if (op === '*') {
+    // ✅ Hard: умножение с результатом максимум 100 (включительно)
+    a = Math.floor(Math.random() * 20) + 1;      // 1–20
+    const bMax = Math.floor(100 / a);            // максимум для b, чтобы a*b ≤ 100
+    b = Math.floor(Math.random() * bMax) + 1;    // 1–bMax
+    answer = a * b;
+  } else {
+    // остальное оставляем как было
+    a = Math.floor(Math.random() * 50) + 1;
+    b = Math.floor(Math.random() * 50) + 1;
+
+    if (op === '-') {
+      if (a < b) [a, b] = [b, a];
+      answer = a - b;
+    } else { // '+'
+      answer = a + b;
+    }
+  }
+}
+
         const displayOp = op === '*' ? '×' : op === '/' ? '÷' : op;
         return { expr: `${a} ${displayOp} ${b}`, a, b, op, answer };
       }
